@@ -200,31 +200,47 @@
             letter-spacing: 5px;
         }
 
-        .more-btn {
+        .valentine-question {
             margin-top: 25px;
-            padding: 12px 40px;
-            font-size: 16px;
-            font-family: 'Georgia', serif;
-            background: linear-gradient(145deg, #e91e63, #c2185b);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
             opacity: 0;
             transform: translateY(10px);
-            transition: all 0.5s ease 1.2s, background 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+            transition: all 0.8s ease 1s;
         }
 
-        .card.opened .more-btn {
+        .card.opened .valentine-question {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .more-btn:hover {
-            background: linear-gradient(145deg, #f06292, #e91e63);
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.5);
+        .question-text {
+            font-size: 20px;
+            color: #c2185b;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .yes-btn {
+            padding: 15px 50px;
+            font-size: 20px;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(145deg, #e91e63, #c2185b);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse-btn 1.5s ease-in-out infinite;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.5);
+        }
+
+        @keyframes pulse-btn {
+            0%, 100% { box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4); }
+            50% { box-shadow: 0 6px 30px rgba(233, 30, 99, 0.6); }
         }
 
         /* Confetti effect when opened */
@@ -275,16 +291,19 @@
             </div>
             <div class="card-inside">
                 <div class="message">
-                    <h2>My Love,</h2>
+                    <h2>My Dearest Love,</h2>
                     <p>
-                        You the GOAT 💕
+                        You the GOAT.
                     </p>
                     <div class="signature">
-                        I Love You,<br>
+                        Forever Yours,<br>
                         Xander Steele
                     </div>
                     <div class="small-hearts">💗 💖 💗</div>
-                    <button class="more-btn" id="moreBtn" onclick="goToMore(event)">More</button>
+                    <div class="valentine-question">
+                        <p class="question-text">Will you be my Valentine?</p>
+                        <button class="yes-btn" onclick="goToMore(event)">Yes! 💕</button>
+                    </div>
                 </div>
             </div>
         </div>
