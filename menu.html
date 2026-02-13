@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💕 More Surprises</title>
+    <title>💌 A Valentine For You</title>
     <style>
         * {
             margin: 0;
@@ -57,145 +57,224 @@
             }
         }
 
-        .menu-container {
+        .card-container {
+            perspective: 1500px;
             z-index: 1;
-            text-align: center;
-            padding: 20px;
         }
 
-        .menu-title {
-            color: #880e4f;
-            font-size: 32px;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .menu-subtitle {
-            color: #ad1457;
-            font-size: 18px;
-            margin-bottom: 50px;
-            font-style: italic;
-        }
-
-        .buttons-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            align-items: center;
-        }
-
-        .menu-btn {
-            width: 280px;
-            padding: 25px 40px;
-            font-size: 22px;
-            font-family: 'Georgia', serif;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        .card {
+            width: 320px;
+            height: 420px;
             position: relative;
-            overflow: hidden;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        .menu-btn::before {
-            content: '';
+        .card:hover:not(.opened) {
+            transform: scale(1.02);
+        }
+
+        .card-front, .card-inside {
             position: absolute;
-            top: 0;
-            left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .menu-btn:hover::before {
-            left: 100%;
-        }
-
-        .menu-btn:hover {
-            transform: translateY(-5px) scale(1.02);
+            backface-visibility: hidden;
+            border-radius: 15px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
-        .menu-btn:active {
-            transform: translateY(-2px) scale(1);
+        .card-front {
+            background: linear-gradient(145deg, #d32f2f 0%, #b71c1c 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: left center;
+            z-index: 2;
         }
 
-        .btn-letter {
+        .card.opened .card-front {
+            transform: rotateY(-160deg);
+        }
+
+        .card-front::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+        }
+
+        .heart-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .card-front h1 {
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .click-hint {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            margin-top: 30px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .card-inside {
+            background: linear-gradient(145deg, #fff5f5 0%, #ffe0e6 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            z-index: 1;
+        }
+
+        .card-inside::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid #f8bbd9;
+            border-radius: 10px;
+        }
+
+        .message {
+            text-align: center;
+            color: #880e4f;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.5s;
+        }
+
+        .card.opened .message {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .message h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #c2185b;
+        }
+
+        .message p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .message .signature {
+            font-style: italic;
+            margin-top: 25px;
+            font-size: 18px;
+            color: #ad1457;
+        }
+
+        .small-hearts {
+            margin-top: 15px;
+            font-size: 20px;
+            letter-spacing: 5px;
+        }
+
+        .valentine-question {
+            margin-top: 25px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.8s ease 1s;
+        }
+
+        .card.opened .valentine-question {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .question-text {
+            font-size: 20px;
+            color: #c2185b;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .yes-btn {
+            padding: 15px 50px;
+            font-size: 20px;
+            font-family: 'Georgia', serif;
             background: linear-gradient(145deg, #e91e63, #c2185b);
             color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse-btn 1.5s ease-in-out infinite;
         }
 
-        .btn-letter:hover {
-            background: linear-gradient(145deg, #f06292, #e91e63);
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.5);
         }
 
-        .btn-crossword {
-            background: linear-gradient(145deg, #9c27b0, #7b1fa2);
-            color: white;
+        @keyframes pulse-btn {
+            0%, 100% { box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4); }
+            50% { box-shadow: 0 6px 30px rgba(233, 30, 99, 0.6); }
         }
 
-        .btn-crossword:hover {
-            background: linear-gradient(145deg, #ba68c8, #9c27b0);
+        /* Confetti effect when opened */
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            display: none;
         }
 
-        .btn-honeymoon {
-            background: linear-gradient(145deg, #2196f3, #1976d2);
-            color: white;
+        .card.opened ~ .confetti {
+            display: block;
         }
 
-        .btn-honeymoon:hover {
-            background: linear-gradient(145deg, #64b5f6, #2196f3);
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confetti-fall 3s linear forwards;
         }
 
-        .btn-icon {
-            font-size: 28px;
-        }
-
-        /* Entrance animations */
-        .menu-btn {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        .menu-btn:nth-child(1) {
-            animation-delay: 0.2s;
-        }
-
-        .menu-btn:nth-child(2) {
-            animation-delay: 0.4s;
-        }
-
-        .menu-btn:nth-child(3) {
-            animation-delay: 0.6s;
-        }
-
-        @keyframes fadeInUp {
-            to {
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
                 opacity: 1;
-                transform: translateY(0);
             }
-        }
-
-        .menu-title, .menu-subtitle {
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards;
-        }
-
-        .menu-subtitle {
-            animation-delay: 0.1s;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
             }
         }
     </style>
@@ -203,26 +282,32 @@
 <body>
     <div class="hearts-bg" id="hearts-bg"></div>
     
-    <div class="menu-container">
-        <h1 class="menu-title">💕 More Surprises 💕</h1>
-        <p class="menu-subtitle">Choose your next adventure...</p>
-        
-        <div class="buttons-wrapper">
-            <a href="valentine.html" class="menu-btn btn-letter">
-                <span class="btn-icon">💌</span>
-                <span>Letter</span>
-            </a>
-            
-            <a href="crossword.html" class="menu-btn btn-crossword">
-                <span class="btn-icon">🧩</span>
-                <span>Crossword</span>
-            </a>
-            
-            <a href="https://www.google.com/search?q=greece+beautiful+scenery&tbm=isch" target="_blank" class="menu-btn btn-honeymoon">
-                <span class="btn-icon">🇬🇷</span>
-                <span>Honeymoon</span>
-            </a>
+    <div class="card-container">
+        <div class="card" id="card" onclick="openCard()">
+            <div class="card-front">
+                <div class="heart-icon">💝</div>
+                <h1>Happy Valentine's Day!</h1>
+                <p class="click-hint">~ Click to open ~</p>
+            </div>
+            <div class="card-inside">
+                <div class="message">
+                    <h2>My Dearest Love,</h2>
+                    <p>
+                        You the GOAT.
+                    </p>
+                    <div class="signature">
+                        Forever Yours,<br>
+                        Xander Steele
+                    </div>
+                    <div class="small-hearts">💗 💖 💗</div>
+                    <div class="valentine-question">
+                        <p class="question-text">Will you be my Valentine?</p>
+                        <button class="yes-btn" onclick="goToMore(event)">Yes! 💕</button>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="confetti" id="confetti"></div>
     </div>
 
     <script>
@@ -242,6 +327,38 @@
             }
         }
 
+        // Create confetti effect
+        function createConfetti() {
+            const container = document.getElementById('confetti');
+            const colors = ['#ff4081', '#e91e63', '#f48fb1', '#ff80ab', '#ffffff', '#fce4ec'];
+            
+            for (let i = 0; i < 50; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay = Math.random() * 0.5 + 's';
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                container.appendChild(piece);
+            }
+        }
+
+        let isOpened = false;
+
+        function openCard() {
+            if (!isOpened) {
+                document.getElementById('card').classList.add('opened');
+                createConfetti();
+                isOpened = true;
+            }
+        }
+
+        function goToMore(event) {
+            event.stopPropagation();
+            window.location.href = 'menu.html';
+        }
+
+        // Initialize
         createFloatingHearts();
     </script>
 </body>
