@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💕 Our Love Crossword</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             min-height: 100vh;
             display: flex;
@@ -20,239 +15,90 @@
             font-family: 'Georgia', serif;
             padding: 20px;
         }
-
         .hearts-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; overflow: hidden; z-index: 0;
         }
-
         .floating-heart {
-            position: absolute;
-            font-size: 20px;
-            animation: float-up 6s linear infinite;
-            opacity: 0.6;
+            position: absolute; font-size: 20px;
+            animation: float-up 6s linear infinite; opacity: 0.6;
         }
-
         @keyframes float-up {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
+            10%, 90% { opacity: 0.6; }
             100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
-
         .game-container {
             background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-            text-align: center;
-            z-index: 1;
-            position: relative;
-            max-width: 900px;
-            width: 100%;
+            padding: 25px; border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            text-align: center; z-index: 1; position: relative;
+            max-width: 1100px; width: 100%;
         }
-
-        h1 {
-            color: #c2185b;
-            font-size: 26px;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            color: #ad1457;
-            font-size: 15px;
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-
+        h1 { color: #c2185b; font-size: 24px; margin-bottom: 6px; }
+        .subtitle { color: #ad1457; font-size: 14px; margin-bottom: 20px; font-style: italic; }
         .game-layout {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            flex-wrap: wrap;
+            display: flex; gap: 25px; justify-content: center;
+            flex-wrap: wrap; align-items: flex-start;
         }
-
-        .crossword-section {
-            flex-shrink: 0;
-        }
-
+        .crossword-section { flex-shrink: 0; overflow-x: auto; }
         .crossword-grid {
-            display: inline-grid;
-            grid-template-columns: repeat(15, 28px);
-            grid-template-rows: repeat(15, 28px);
-            gap: 1px;
-            background: #e91e63;
-            padding: 1px;
-            border-radius: 5px;
+            display: inline-grid; gap: 1px; background: #e91e63;
+            padding: 1px; border-radius: 6px;
         }
-
         .cell {
-            width: 28px;
-            height: 28px;
-            border: none;
-            background: white;
-            font-size: 14px;
-            text-align: center;
-            text-transform: uppercase;
-            font-weight: bold;
-            color: #880e4f;
-            position: relative;
+            width: 26px; height: 26px; border: none; background: white;
+            font-size: 13px; text-align: center; text-transform: uppercase;
+            font-weight: bold; color: #880e4f;
         }
-
-        .cell:focus {
-            outline: none;
-            background: #fff9c4;
-        }
-
-        .cell.blocked {
-            background: #f8bbd9;
-        }
-
-        .cell-wrapper {
-            position: relative;
-            width: 28px;
-            height: 28px;
-        }
-
+        .cell:focus { outline: none; background: #fff9c4; }
+        .cell.blocked { background: #f8bbd9; }
+        .cell-wrapper { position: relative; width: 26px; height: 26px; }
         .cell-wrapper .cell-number {
-            position: absolute;
-            top: 1px;
-            left: 2px;
-            font-size: 8px;
-            color: #c2185b;
-            font-weight: bold;
-            z-index: 2;
-            pointer-events: none;
+            position: absolute; top: 1px; left: 2px; font-size: 7px;
+            color: #c2185b; font-weight: bold; z-index: 2; pointer-events: none;
         }
-
-        .cell-wrapper input {
-            width: 100%;
-            height: 100%;
-        }
-
-        .clues-section {
-            flex: 1;
-            min-width: 280px;
-            max-width: 350px;
-        }
-
+        .cell-wrapper input { width: 100%; height: 100%; }
+        .clues-section { flex: 1; min-width: 280px; max-width: 420px; }
         .clues-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            text-align: left;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 15px; text-align: left;
         }
-
         .clue-section h3 {
-            color: #c2185b;
-            margin-bottom: 10px;
-            font-size: 16px;
-            border-bottom: 2px solid #f8bbd9;
-            padding-bottom: 5px;
+            color: #c2185b; margin-bottom: 8px; font-size: 14px;
+            border-bottom: 2px solid #f8bbd9; padding-bottom: 4px;
         }
-
-        .clue {
-            color: #880e4f;
-            margin-bottom: 6px;
-            font-size: 13px;
-            line-height: 1.3;
-        }
-
-        .clue-number {
-            font-weight: bold;
-            color: #c2185b;
-            display: inline-block;
-            min-width: 22px;
-        }
-
+        .clue { color: #880e4f; margin-bottom: 5px; font-size: 11px; line-height: 1.3; }
+        .clue-number { font-weight: bold; color: #c2185b; display: inline-block; min-width: 18px; }
         .buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 25px;
+            display: flex; gap: 12px; justify-content: center;
+            flex-wrap: wrap; margin-top: 20px;
         }
-
         .btn {
-            padding: 12px 30px;
-            font-size: 16px;
-            font-family: 'Georgia', serif;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
+            padding: 10px 24px; font-size: 15px; font-family: 'Georgia', serif;
+            border: none; border-radius: 50px; cursor: pointer;
+            transition: all 0.3s ease; text-decoration: none;
         }
-
-        .btn-back {
-            background: linear-gradient(145deg, #9c27b0, #7b1fa2);
-            color: white;
-        }
-
-        .btn-check {
-            background: linear-gradient(145deg, #e91e63, #c2185b);
-            color: white;
-        }
-
-        .btn-reveal {
-            background: linear-gradient(145deg, #ff9800, #f57c00);
-            color: white;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-
+        .btn-back { background: linear-gradient(145deg, #9c27b0, #7b1fa2); color: white; }
+        .btn-check { background: linear-gradient(145deg, #e91e63, #c2185b); color: white; }
+        .btn-reveal { background: linear-gradient(145deg, #ff9800, #f57c00); color: white; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
         .message {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            display: none;
-            font-size: 16px;
+            margin-top: 18px; padding: 12px; border-radius: 10px;
+            display: none; font-size: 15px;
         }
-
-        .message.success {
-            background: #c8e6c9;
-            color: #2e7d32;
-            display: block;
-        }
-
-        .message.error {
-            background: #fff3e0;
-            color: #e65100;
-            display: block;
-        }
-
-        @media (max-width: 750px) {
-            .game-layout {
-                flex-direction: column;
-                align-items: center;
-            }
-            .crossword-grid {
-                grid-template-columns: repeat(15, 22px);
-                grid-template-rows: repeat(15, 22px);
-            }
-            .cell, .cell-wrapper {
-                width: 22px;
-                height: 22px;
-                font-size: 11px;
-            }
-            .cell-wrapper .cell-number {
-                font-size: 6px;
-            }
+        .message.success { background: #c8e6c9; color: #2e7d32; display: block; }
+        .message.error { background: #fff3e0; color: #e65100; display: block; }
+        @media (max-width: 900px) {
+            .game-layout { flex-direction: column; align-items: center; }
+            .clues-container { grid-template-columns: 1fr; }
+            .cell, .cell-wrapper { width: 22px; height: 22px; }
+            .cell { font-size: 11px; }
         }
     </style>
 </head>
 <body>
     <div class="hearts-bg" id="hearts-bg"></div>
-    
     <div class="game-container">
         <h1>💕 Our Love Story Crossword 💕</h1>
         <p class="subtitle">How well do you know us?</p>
@@ -266,29 +112,31 @@
                 <div class="clues-container">
                     <div class="clue-section">
                         <h3>Across →</h3>
-                        <div class="clue"><span class="clue-number">1.</span> Wedding Date</div>
-                        <div class="clue"><span class="clue-number">4.</span> How long I will love you</div>
-                        <div class="clue"><span class="clue-number">6.</span> Where we met</div>
-                        <div class="clue"><span class="clue-number">8.</span> Month we started dating</div>
-                        <div class="clue"><span class="clue-number">10.</span> Honeymoon spot</div>
-                        <div class="clue"><span class="clue-number">11.</span> First Kiss Spot</div>
-                        <div class="clue"><span class="clue-number">13.</span> How we survived Long Distance</div>
-                        <div class="clue"><span class="clue-number">15.</span> Only Valentines Date we have had</div>
-                        <div class="clue"><span class="clue-number">17.</span> What I think when I look at you</div>
-                        <div class="clue"><span class="clue-number">18.</span> First Solo Vacation</div>
+                        <div class="clue"><span class="clue-number">2.</span> Animals we will have one day</div>
+                        <div class="clue"><span class="clue-number">5.</span> First Solo Vacation</div>
+                        <div class="clue"><span class="clue-number">7.</span> I love you ____</div>
+                        <div class="clue"><span class="clue-number">9.</span> Wedding Date</div>
+                        <div class="clue"><span class="clue-number">10.</span> The Center of our Marriage</div>
+                        <div class="clue"><span class="clue-number">14.</span> Where we had our first real conversation</div>
+                        <div class="clue"><span class="clue-number">16.</span> Type of relationship we have</div>
+                        <div class="clue"><span class="clue-number">19.</span> How long I will love you</div>
+                        <div class="clue"><span class="clue-number">21.</span> What I wish I could give you</div>
+                        <div class="clue"><span class="clue-number">22.</span> What you think of me</div>
                     </div>
                     <div class="clue-section">
                         <h3>Down ↓</h3>
-                        <div class="clue"><span class="clue-number">2.</span> Our favorite saying</div>
-                        <div class="clue"><span class="clue-number">3.</span> Future home</div>
-                        <div class="clue"><span class="clue-number">5.</span> What you think of me</div>
-                        <div class="clue"><span class="clue-number">7.</span> How much money we have right now</div>
-                        <div class="clue"><span class="clue-number">9.</span> Animals we will have one day</div>
-                        <div class="clue"><span class="clue-number">12.</span> Broncos should have won _____</div>
-                        <div class="clue"><span class="clue-number">14.</span> Type of relationship we have</div>
-                        <div class="clue"><span class="clue-number">16.</span> The Center of our Marriage</div>
-                        <div class="clue"><span class="clue-number">19.</span> I love you ____</div>
-                        <div class="clue"><span class="clue-number">20.</span> What I wish I could give you</div>
+                        <div class="clue"><span class="clue-number">1.</span> Where I proposed</div>
+                        <div class="clue"><span class="clue-number">3.</span> Broncos should have won _____</div>
+                        <div class="clue"><span class="clue-number">4.</span> What I think when I look at you</div>
+                        <div class="clue"><span class="clue-number">6.</span> Honeymoon spot</div>
+                        <div class="clue"><span class="clue-number">8.</span> Month we started dating</div>
+                        <div class="clue"><span class="clue-number">11.</span> How we survived Long Distance</div>
+                        <div class="clue"><span class="clue-number">12.</span> Where we met</div>
+                        <div class="clue"><span class="clue-number">13.</span> Only Valentines Date we have had</div>
+                        <div class="clue"><span class="clue-number">15.</span> Our favorite saying</div>
+                        <div class="clue"><span class="clue-number">17.</span> How much money we have right now</div>
+                        <div class="clue"><span class="clue-number">18.</span> First Kiss Spot</div>
+                        <div class="clue"><span class="clue-number">20.</span> Future home</div>
                     </div>
                 </div>
             </div>
@@ -299,148 +147,210 @@
             <button class="btn btn-check" onclick="checkAnswers()">Check Answers 💕</button>
             <button class="btn btn-reveal" onclick="revealAnswers()">Reveal All</button>
         </div>
-
         <div class="message" id="message"></div>
     </div>
 
     <script>
-        // Crossword puzzle grid (15x15)
-        // . = blocked, letters = answer, numbers indicate clue starts
-        const puzzleData = {
-            grid: [
-                // Row 0:  J U N E S I X
-                ['1J','U','N','E','S','I','X','.','.','.','.','.','.','.','.',],
-                // Row 1
-                ['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-                // Row 2: F O R E V E R
-                ['.','4F','O','R','E','V','E','R','.','.','.','.','.','.','.',],
-                // Row 3
-                ['2A','.','.','.','.','.','.','.','.','.','.','.','.','.','.',],
-                // Row 4: GRAND
-                ['Y','.','6G','R','A','N','D','.','.','.','.','.','.','.','.',],
-                // Row 5
-                ['E','.','5G','.','.','.','.','.','.','.','.','.','.','.','.'],
-                // Row 6: AUGUST
-                ['.','8A','U','G','U','S','T','9C','.','.','.','.','.','.','.'],
-                // Row 7
-                ['.','.','.','7N','.','.','.','H','.','.','.','.','.','.','.',],
-                // Row 8: GREECE, DECK
-                ['.','10G','R','E','E','C','E','.','11D','E','C','K','.','.','.'],
-                // Row 9
-                ['.','.','.','.','.','.','.','I','.','.','.','.','.','.','.'],
-                // Row 10: FACETIME
-                ['.','.','.','13F','A','C','E','T','I','M','E','.','.','.','.',],
-                // Row 11
-                ['.','.','.','.','.','.','.','E','.','19M','.','.','.','.','.',],
-                // Row 12: PAINTING
-                ['3R','.','15P','A','I','N','T','I','N','G','.','.','.','.','.',],
-                // Row 13
-                ['V','12S','.','.','.','.','.','.','.','O','.','.','.','.','.',],
-                // Row 14: GORGEOUS, starts col 0
-                ['17G','O','R','G','E','O','U','S','.','R','.','.','.','.','.',],
-                // Row 15
-                ['.','U','.','16J','.','.','.','.','20A','E','.','.','.','.','.',],
-                // Row 16: HOTSPRINGS
-                ['18H','O','T','S','P','R','I','N','G','S','.','.','.','.','.',],
-                // Row 17
-                ['.','P','.','.','E','.','.','.','K','.','.','.','.','.','.'],
-                // Row 18
-                ['.','E','.','14T','R','A','D','I','T','I','O','N','A','L','.',],
-                // Row 19
-                ['.','R','.','.','.','.','.','S','.','.','.','.','.','.','.'],
-                // Row 20
-                ['.','B','.','.','.','.','.','S','.','.','.','.','.','.','.'],
-                // Row 21
-                ['.','O','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-                // Row 22
-                ['.','W','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-                // Row 23
-                ['.','L','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-            ],
-            // Simplified - we'll build the grid programmatically
+        // Your exact layout from the CSV
+        const layoutRows = [
+            ",,,,B,,,,,,,,,,,,,,",
+            ",,,,A,,,,,,,,,,,,,,",
+            ",,,,C,H,I,C,K,E,N,S,,,,,,,",
+            ",,,,K,,,,,,,U,,,,,,,",
+            ",,,,Y,,,,,,,P,,,,,,,",
+            ",,,,A,,,G,,,,E,,,,,,,",
+            ",,,,R,,H,O,T,S,P,R,I,N,G,S,,,",
+            ",,,,D,,,R,,,,B,,,R,,,,",
+            ",,,,,,,G,,,M,O,S,T,E,S,T,,",
+            ",,,,,,,E,,,,W,,,E,,,,",
+            ",,,,A,,,U,,,,L,,,C,,,,",
+            ",,,J,U,N,E,S,I,X,,,,,E,,,,",
+            ",,,,G,,,,,,,,,,,,,,",
+            ",J,E,S,U,S,,,L,,G,,P,,,,,,",
+            ",,,,S,,,,E,,R,,A,,,,,,",
+            ",B,O,A,T,,,,T,R,A,D,I,T,I,O,N,A,L",
+            ",,,Y,,D,,,T,,N,,N,,,,O,,",
+            "F,O,R,E,V,E,R,,E,,D,,T,,,,N,,",
+            ",,V,,,C,,,R,,,,I,,,,E,,",
+            ",,,,A,K,I,S,S,,,,N,,,,,,",
+            ",,,,,,,,,,,,G,O,A,T,,,"
+        ];
+
+        // Word definitions with hints
+        const wordDefs = {
+            // ACROSS words - [startRow, startCol, word]
+            'CHICKENS': { hint: 'Animals we will have one day', dir: 'across' },
+            'HOTSPRINGS': { hint: 'First Solo Vacation', dir: 'across' },
+            'MOSTEST': { hint: 'I love you ____', dir: 'across' },
+            'JUNESIX': { hint: 'Wedding Date', dir: 'across' },
+            'JESUS': { hint: 'The Center of our Marriage', dir: 'across' },
+            'BOAT': { hint: 'Where we had our first real conversation', dir: 'across' },
+            'TRADITIONAL': { hint: 'Type of relationship we have', dir: 'across' },
+            'FOREVER': { hint: 'How long I will love you', dir: 'across' },
+            'AKISS': { hint: 'What I wish I could give you', dir: 'across' },
+            'GOAT': { hint: 'What you think of me', dir: 'across' },
+            // DOWN words
+            'BACKYARD': { hint: 'Where I proposed', dir: 'down' },
+            'SUPERBOWL': { hint: 'Broncos should have won _____', dir: 'down' },
+            'GREECE': { hint: 'Honeymoon spot', dir: 'down' },
+            'GORGEOUS': { hint: 'What I think when I look at you', dir: 'down' },
+            'AUGUST': { hint: 'Month we started dating', dir: 'down' },
+            'NONE': { hint: 'How much money we have right now', dir: 'down' },
+            'GRAND': { hint: 'Where we met', dir: 'down' },
+            'LETTERS': { hint: 'How we survived Long Distance', dir: 'down' },
+            'DECK': { hint: 'First Kiss Spot', dir: 'down' },
+            'AYE': { hint: 'Our favorite saying', dir: 'down' },
+            'RV': { hint: 'Future home', dir: 'down' },
+            'PAINTING': { hint: 'Only Valentines Date we have had', dir: 'down' }
         };
 
-        // Actual crossword layout - each cell is either null (blocked) or {letter, number?}
-        const GRID_SIZE = 17;
-        const crossword = [];
-        
-        // Initialize empty grid
-        for (let r = 0; r < GRID_SIZE; r++) {
-            crossword[r] = [];
-            for (let c = 0; c < 15; c++) {
-                crossword[r][c] = null; // blocked by default
-            }
-        }
+        const ROWS = 21;
+        const COLS = 19;
+        const grid = [];
 
-        // Place words
-        // ACROSS
-        placeWord('JUNESIX', 0, 0, 'across', 1);      // 1A Wedding Date
-        placeWord('FOREVER', 2, 0, 'across', 4);      // 4A How long I will love you
-        placeWord('GRAND', 4, 2, 'across', 6);        // 6A Where we met
-        placeWord('AUGUST', 6, 1, 'across', 8);       // 8A Month we started dating
-        placeWord('GREECE', 8, 1, 'across', 10);      // 10A Honeymoon spot
-        placeWord('DECK', 8, 8, 'across', 11);        // 11A First Kiss Spot
-        placeWord('FACETIME', 10, 2, 'across', 13);   // 13A How we survived Long Distance
-        placeWord('PAINTING', 12, 1, 'across', 15);   // 15A Only Valentines Date we have had
-        placeWord('GORGEOUS', 14, 0, 'across', 17);   // 17A What I think when I look at you
-        placeWord('HOTSPRINGS', 16, 0, 'across', 18); // 18A First Solo Vacation
-
-        // DOWN
-        placeWord('AYE', 3, 0, 'down', 2);            // 2D Our favorite saying
-        placeWord('RV', 12, 0, 'down', 3);            // 3D Future home
-        placeWord('GOAT', 5, 2, 'down', 5);           // 5D What you think of me
-        placeWord('NONE', 7, 3, 'down', 7);           // 7D How much money we have right now
-        placeWord('CHICKENS', 6, 7, 'down', 9);       // 9D Animals we will have one day
-        placeWord('SUPERBOWL', 13, 1, 'down', 12);    // 12D Broncos should have won
-        placeWord('TRADITIONAL', 18, 3, 'down', 14);  // 14D Type of relationship we have
-        placeWord('JESUS', 15, 3, 'down', 16);        // 16D The Center of our Marriage
-        placeWord('MORE', 11, 9, 'down', 19);         // 19D I love you ____
-        placeWord('AKISS', 15, 8, 'down', 20);        // 20D What I wish I could give you
-
-        function placeWord(word, row, col, direction, number) {
-            for (let i = 0; i < word.length; i++) {
-                const r = direction === 'down' ? row + i : row;
-                const c = direction === 'across' ? col + i : col;
-                
-                if (r < GRID_SIZE && c < 15) {
-                    if (!crossword[r][c]) {
-                        crossword[r][c] = { letter: word[i], number: null };
-                    }
-                    crossword[r][c].letter = word[i];
-                    if (i === 0 && number) {
-                        crossword[r][c].number = number;
-                    }
+        // Parse the layout
+        for (let r = 0; r < ROWS; r++) {
+            grid[r] = [];
+            const cells = layoutRows[r].split(',');
+            for (let c = 0; c < COLS; c++) {
+                const val = cells[c] ? cells[c].trim() : '';
+                if (val && val.length === 1 && val.match(/[A-Z]/i)) {
+                    grid[r][c] = { letter: val.toUpperCase(), number: null };
+                } else {
+                    grid[r][c] = null;
                 }
             }
         }
 
-        // Render the grid
+        // Set exact numbers based on word start positions from your layout
+        // CSV is 1-indexed, array is 0-indexed, so row 1 in CSV = index 0
+        // Also columns: A=0, B=1, C=2, D=3, E=4, F=5, G=6, H=7, I=8, J=9, K=10, L=11, M=12, N=13, O=14, P=15, Q=16, R=17, S=18
+        
+        function setNumber(row, col, num) {
+            if (grid[row] && grid[row][col]) {
+                grid[row][col].number = num;
+            } else {
+                console.log(`No cell at row ${row}, col ${col} for number ${num}`);
+            }
+        }
+        
+        // 1 Down BACKYARD: B at row 0 (CSV row 1), col 4 (column E)
+        setNumber(0, 4, 1);
+        // 2 Across CHICKENS: C at row 2 (CSV row 3), col 4
+        setNumber(2, 4, 2);
+        // 3 Down SUPERBOWL: S at row 2 (CSV row 3), col 11 (shares S with CHICKENS)
+        setNumber(2, 11, 3);
+        // 4 Down GORGEOUS: G at row 5 (CSV row 6), col 7 (column H)
+        setNumber(5, 7, 4);
+        // 5 Across HOTSPRINGS: H at row 6 (CSV row 7), col 6 (column G)
+        setNumber(6, 6, 5);
+        // 6 Down GREECE: Looking at CSV - need to find G-R-E-E-C-E going down
+        // Row 7 col 7 is O, row 8 col 7 is G... Let me trace GREECE
+        // Actually checking col 7: row5=G, row6=O, row7=R, row8=G, row9=E, row10=U, row11=S - that's GORGEOUS
+        // GREECE must share a letter. Looking at row 7 (CSV row 8): R at col 7
+        // The R in HOTSPRINGS at row 6 col 11... checking down: R(6,11), B(7,11), O(8,11), W(9,11), L(10,11)
+        // That's not it. Let me check where GREECE fits based on your layout.
+        // Row 14 col 10: G, Row 15 col 10: R... checking: G(13,10), R(14,10), A(15,10), N(16,10), D(17,10) = GRAND
+        // GREECE: Perhaps row 5 col 7 starts GORGEOUS, and GREECE shares somewhere
+        // Looking at row 7: ,,,,R,,H,O,T,S,P,R,I,N,G,S - col 14 is G, col 15 is S
+        // Row 8: ,,,,D,,,R,,,,B,,,R - col 7 is R, col 14 is R
+        // Row 7 col 14 = G (from HOTSPRINGS G)
+        // Down from row 6, col 14: G(6,14), then row 7 col 14... CSV row 8 is ,,,,D,,,R,,,,B,,,R
+        // Col 14 would be R. So G-R... row 8 col 14: looking at ,,,,,,,G,,,M,O,S,T,E,S,T
+        // That's row 9 in CSV = index 8. Col 14 is E. So G(6,14)-R(7,14)-E(8,14)...
+        // Row 9 col 14: ,,,,,,,E,,,,W,,,E - col 14 is E. G-R-E-E so far
+        // Row 10 col 14: ,,,,A,,,U,,,,L,,,C - col 14 is C. G-R-E-E-C!
+        // Row 11 col 14: ,,,J,U,N,E,S,I,X,,,,,E - col 14 is E. G-R-E-E-C-E = GREECE!
+        // So GREECE starts at row 6 (CSV row 7), col 14
+        setNumber(6, 14, 6);
+        // 7 Across MOSTEST: M at row 8 (CSV row 9), col 10
+        setNumber(8, 10, 7);
+        // 8 Down AUGUST: A at row 10 (CSV row 11), col 4
+        setNumber(10, 4, 8);
+        // 9 Across JUNESIX: J at row 11 (CSV row 12), col 3
+        setNumber(11, 3, 9);
+        // 10 Across JESUS: J at row 13 (CSV row 14), col 1
+        setNumber(13, 1, 10);
+        // 11 Down LETTERS: L at row 13 (CSV row 14), col 8
+        setNumber(13, 8, 11);
+        // 12 Down GRAND: G at row 13 (CSV row 14), col 10
+        setNumber(13, 10, 12);
+        // 13 Down PAINTING: P at row 13 (CSV row 14), col 12
+        setNumber(13, 12, 13);
+        // 14 Across BOAT: B at row 15 (CSV row 16), col 1
+        setNumber(15, 1, 14);
+        // 15 Down AYE: Y at row 16 (CSV row 17), col 3 - wait AYE is A-Y-E
+        // Looking for A going down to Y to E
+        // Row 15 col 3: A (from BOAT), row 16 col 3: Y, row 17 col 3: E
+        // So AYE starts at row 15, col 3 with A
+        setNumber(15, 3, 15);
+        // 16 Across TRADITIONAL: T at row 15 (CSV row 16), col 8
+        setNumber(15, 8, 16);
+        // 17 Down NONE: N-O-N-E, looking for this pattern
+        // Row 16 col 16: O, Row 17 col 16: N, Row 18 col 16: E - that's O-N-E
+        // Row 16 col 10: N, Row 17 col 10: D - that's part of GRAND continuation
+        // Checking row 16: ,,,Y,,D,,,T,,N,,N,,,,O,,
+        // Col 10 is N, col 12 is N, col 16 is O
+        // Let me look for N starting: row 17 col 16 is N, row 18 col 16 is E...
+        // Actually row 16 col 11: looking at CSV row 17 columns - need to count
+        // ,,,Y,,D,,,T,,N,,N,,,,O,, = col0=empty,col1=empty,col2=empty,col3=Y,col4=empty,col5=D,col6=empty,col7=empty,col8=T,col9=empty,col10=N,col11=empty,col12=N,col13=empty,col14=empty,col15=empty,col16=O
+        // Hmm. NONE = N-O-N-E. Maybe it shares letters. 
+        // Col 16: row 15=O(from TRADITIONAL?), row 16=O, row 17=N, row 18=E
+        // Wait let me check TRADITIONAL: T-R-A-D-I-T-I-O-N-A-L starts at row 15 col 8
+        // Col 8=T, 9=R, 10=A, 11=D, 12=I, 13=T, 14=I, 15=O, 16=N, 17=A, 18=L
+        // So col 16 of row 15 is N (from TRADITIONAL)
+        // Then down: N(15,16), blank?, blank?
+        // CSV row 17 (index 16): ,,,Y,,D,,,T,,N,,N,,,,O,, - col 16 is O
+        // CSV row 18 (index 17): F,O,R,E,V,E,R,,E,,D,,T,,,,N,, - col 16 is N  
+        // CSV row 19 (index 18): ,,V,,,C,,,R,,,,I,,,,E,, - col 16 is E
+        // So col 16 going down from row 15: N-O-N-E = NONE! Starts at row 15 col 16
+        setNumber(15, 16, 17);
+        // 18 Down DECK: D at row 16 (CSV row 17), col 5
+        setNumber(16, 5, 18);
+        // 19 Across FOREVER: F at row 17 (CSV row 18), col 0
+        setNumber(17, 0, 19);
+        // 20 Down RV: R-V. Row 17 col 2 is R (from FOREVER), row 18 col 2 is V
+        // So RV starts at row 17 col 2, sharing R with FOREVER
+        setNumber(17, 2, 20);
+        // 21 Across AKISS: A at row 19 (CSV row 20), col 4
+        setNumber(19, 4, 21);
+        // 22 Across GOAT: G at row 20 (CSV row 21), col 12
+        setNumber(20, 12, 22);
+
         function renderGrid() {
             const gridEl = document.getElementById('grid');
             gridEl.innerHTML = '';
-            
-            for (let r = 0; r < GRID_SIZE; r++) {
-                for (let c = 0; c < 15; c++) {
-                    const cellData = crossword[r][c];
-                    
-                    if (cellData) {
+
+            let minR = ROWS, maxR = 0, minC = COLS, maxC = 0;
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (grid[r] && grid[r][c]) {
+                        minR = Math.min(minR, r); maxR = Math.max(maxR, r);
+                        minC = Math.min(minC, c); maxC = Math.max(maxC, c);
+                    }
+                }
+            }
+
+            const cols = maxC - minC + 1;
+            gridEl.style.gridTemplateColumns = `repeat(${cols}, 26px)`;
+
+            for (let r = minR; r <= maxR; r++) {
+                for (let c = minC; c <= maxC; c++) {
+                    const cell = grid[r] && grid[r][c];
+                    if (cell) {
                         const wrapper = document.createElement('div');
                         wrapper.className = 'cell-wrapper';
-                        
-                        if (cellData.number) {
-                            const numSpan = document.createElement('span');
-                            numSpan.className = 'cell-number';
-                            numSpan.textContent = cellData.number;
-                            wrapper.appendChild(numSpan);
+                        if (cell.number) {
+                            const num = document.createElement('span');
+                            num.className = 'cell-number';
+                            num.textContent = cell.number;
+                            wrapper.appendChild(num);
                         }
-                        
                         const input = document.createElement('input');
                         input.type = 'text';
                         input.className = 'cell';
                         input.maxLength = 1;
-                        input.dataset.answer = cellData.letter;
-                        input.dataset.row = r;
-                        input.dataset.col = c;
+                        input.dataset.answer = cell.letter;
                         wrapper.appendChild(input);
                         gridEl.appendChild(wrapper);
                     } else {
@@ -451,19 +361,14 @@
                 }
             }
 
-            // Add keyboard navigation
             const inputs = document.querySelectorAll('input.cell');
-            inputs.forEach((input, idx) => {
+            inputs.forEach((input, i) => {
                 input.addEventListener('input', function() {
                     this.value = this.value.toUpperCase();
-                    if (this.value.length === 1 && idx < inputs.length - 1) {
-                        inputs[idx + 1].focus();
-                    }
+                    if (this.value && i < inputs.length - 1) inputs[i + 1].focus();
                 });
                 input.addEventListener('keydown', function(e) {
-                    if (e.key === 'Backspace' && !this.value && idx > 0) {
-                        inputs[idx - 1].focus();
-                    }
+                    if (e.key === 'Backspace' && !this.value && i > 0) inputs[i - 1].focus();
                 });
             });
         }
@@ -471,59 +376,48 @@
         function checkAnswers() {
             const inputs = document.querySelectorAll('input.cell');
             let correct = 0;
-            let total = inputs.length;
-
             inputs.forEach(input => {
-                const answer = input.dataset.answer;
-                if (input.value.toUpperCase() === answer.toUpperCase()) {
-                    correct++;
-                    input.style.background = '#c8e6c9';
+                if (input.value.toUpperCase() === input.dataset.answer) {
+                    correct++; input.style.background = '#c8e6c9';
                 } else if (input.value) {
                     input.style.background = '#ffcdd2';
                 } else {
                     input.style.background = 'white';
                 }
             });
-
-            const message = document.getElementById('message');
-            if (correct === total) {
-                message.className = 'message success';
-                message.innerHTML = '🎉 You did it! You know our love story perfectly! 💕<br>I love you so much, future Mrs.!';
+            const msg = document.getElementById('message');
+            if (correct === inputs.length) {
+                msg.className = 'message success';
+                msg.innerHTML = '🎉 Perfect! You know our love story by heart! 💕';
             } else {
-                message.className = 'message error';
-                message.innerHTML = `💕 ${correct}/${total} letters correct! Keep going, you've got this!`;
+                msg.className = 'message error';
+                msg.innerHTML = `💕 ${correct}/${inputs.length} correct! Keep going!`;
             }
         }
 
         function revealAnswers() {
-            const inputs = document.querySelectorAll('input.cell');
-            inputs.forEach(input => {
-                input.value = input.dataset.answer;
-                input.style.background = '#e1bee7';
+            document.querySelectorAll('input.cell').forEach(i => {
+                i.value = i.dataset.answer; i.style.background = '#e1bee7';
             });
-            
-            const message = document.getElementById('message');
-            message.className = 'message success';
-            message.innerHTML = '💜 All answers revealed! Now you know all our special memories! 💜';
+            document.getElementById('message').className = 'message success';
+            document.getElementById('message').innerHTML = '💜 Our love story revealed! 💜';
         }
 
-        // Floating hearts
-        function createFloatingHearts() {
-            const container = document.getElementById('hearts-bg');
-            const hearts = ['💕', '💗', '💖', '💘', '❤️', '💓'];
-            
-            for (let i = 0; i < 12; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'floating-heart';
-                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                heart.style.left = Math.random() * 100 + '%';
-                heart.style.animationDelay = Math.random() * 6 + 's';
-                heart.style.fontSize = (15 + Math.random() * 15) + 'px';
-                container.appendChild(heart);
-            }
-        }
+        (function() {
+            const c = document.getElementById('hearts-bg');
+            ['💕','💗','💖','💘','❤️','💓'].forEach(h => {
+                for (let j = 0; j < 2; j++) {
+                    const d = document.createElement('div');
+                    d.className = 'floating-heart';
+                    d.textContent = h;
+                    d.style.left = Math.random()*100+'%';
+                    d.style.animationDelay = Math.random()*6+'s';
+                    d.style.fontSize = (15+Math.random()*15)+'px';
+                    c.appendChild(d);
+                }
+            });
+        })();
 
-        createFloatingHearts();
         renderGrid();
     </script>
 </body>
